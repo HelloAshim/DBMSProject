@@ -59,3 +59,48 @@ class CourseOutline(models.Model):
     lesson_plan=models.CharField(max_length=50)
     course=models.ForeignKey(Course,on_delete=models.CASCADE)
     section=models.ForeignKey(Section,on_delete=models.CASCADE)
+
+class PLO(models.Model):
+    plo_num=models.PositiveIntegerField()
+    description=models.CharField(max_length=50)
+    programme=models.ForeignKey(Programme,on_delete=models.CASCADE)
+    def __str__(self) :
+        return self.plo_num
+
+
+class CO(models.Model):
+    co_num=models.PositiveIntegerField()
+    description=models.CharField(max_length=50)
+    plo=models.ForeignKey(PLO,on_delete=models.CASCADE)
+    course=models.ForeignKey(Course,on_delete=models.CASCADE)
+    question=models.ForeignKey(Question,on_delete=models.CASCADE)
+
+    def __str__(self) :
+        return self.co_num
+
+
+class Evaluation(models.Model):
+    achieved_marks=models.PositiveBigIntegerField()
+    name=models.CharField(max_length=50)
+    type=models.CharField(max_length=50)
+    question=models.ForeignKey(Question,on_delete=models.CASCADE)
+    enrollment=models.PositiveBigIntegerField()
+    def __str__(self) :
+        return self.name
+
+class Student(models.Model):
+    name=models.CharField(max_length=50)
+    date_of_birth=models.DateField()
+    email=models.CharField(max_length=50)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+    programme= models.ForeignKey(Programme,on_delete=models.CASCADE)
+    def __str__(self) :
+        return self.name
+
+class Enrollment(models.Model):
+    sementer=models.CharField(max_length=50)
+    year=models.CharField(max_length=50)
+    student_num=models.IntegerField()
+    section=models.ForeignKey(Section,on_delete=models.CASCADE)
+    def __str__(self) :
+        return self.name
